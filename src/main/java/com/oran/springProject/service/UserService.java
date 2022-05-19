@@ -1,18 +1,25 @@
 package com.oran.springProject.service;
 
+import com.oran.springProject.entity.UserEntity;
+import com.oran.springProject.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
-    private final List<String> users = List.of("neri", "oran", "haim");
+    private final UserRepository userRepository;
 
-    public List<String> searchUsers(String name) {
-        return users.stream()
-                .filter(user -> user.startsWith(name))
-                .collect(Collectors.toList());
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public List<UserEntity> searchUsers(String name) {
+        return userRepository.findAllByName(name);
+    }
+
+    public UserEntity getById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 }

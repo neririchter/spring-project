@@ -1,6 +1,7 @@
 package com.oran.springProject.controller;
 
 import com.oran.springProject.client.CurrencyClient;
+import com.oran.springProject.entity.UserEntity;
 import com.oran.springProject.model.User;
 import com.oran.springProject.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,14 +31,14 @@ public class UserController {
     }
 
     @GetMapping
-    public List<String> searchUsers(@RequestParam(name = "name", required = false, defaultValue = "") String name){
+    public List<UserEntity> searchUsers(@RequestParam(name = "name", required = false, defaultValue = "") String name){
         currencyClient.getCurrency();
         return userService.searchUsers(name);
     }
 
     @GetMapping("/{id}")
-    public String getUser(@PathVariable Long id){
-        return null;
+    public UserEntity getUser(@PathVariable Long id){
+        return userService.getById(id);
     }
 
     @PutMapping
